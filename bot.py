@@ -2,6 +2,9 @@ from telegram import *
 from telegram.ext import *
 import config
 import database
+import admin_commands
+import user_commands
+
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
@@ -68,9 +71,19 @@ async def verify(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.answer("❌ Join all channels first!", show_alert=True)
 
 
+
 app = ApplicationBuilder().token(config.TOKEN).build()
+
 
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CallbackQueryHandler(verify, pattern="verify"))
+
+app.add_handler(CommandHandler("stats", admin_commands.stats))
+app.add_handler(CommandHandler("broadcast", admin_commands.broadcast))
+
+app.add_handler(CommandHandler("balance", user_commands.balance))
+app.add_handler(CommandHandler("invite", user_commands.invite))
+app.add_handler(CommandHandler("withdraw", user_commands.withdraw))
+
 
 app.run_polling()
