@@ -83,7 +83,6 @@ app.add_handler(CommandHandler("withdraw", user_commands.withdraw))
 
 app.run_polling(drop_pending_updates=True)        await query.answer("❌ Join all channels first!", show_alert=True)
 
-
 app = ApplicationBuilder().token(config.TOKEN).build()
 
 app.add_handler(CommandHandler("start", start))
