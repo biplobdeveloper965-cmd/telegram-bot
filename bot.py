@@ -1,5 +1,5 @@
-from telegram import *
-from telegram.ext import *
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, Update
+from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, ContextTypes
 import config
 import database
 import admin_commands
@@ -39,7 +39,6 @@ async def verify(update: Update, context: ContextTypes.DEFAULT_TYPE):
     joined = True
 
     for title, link in config.CHANNELS:
-
         channel = link.replace("https://t.me/", "@")
 
         try:
@@ -82,66 +81,7 @@ app.add_handler(CommandHandler("balance", user_commands.balance))
 app.add_handler(CommandHandler("invite", user_commands.invite))
 app.add_handler(CommandHandler("withdraw", user_commands.withdraw))
 
-app.run_polling(drop_pending_updates=True)
-    joined = True
-
-    for title, link in config.CHANNELS:
-        channel = link.replace("https://t.me/", "@")
-
-        try:
-            member = await context.bot.get_chat_member(channel, user)
-
-            if member.status == "left":
-                joined = False
-
-        except:
-            joined = False
-
-    if joined:
-
-        menu = [
-            ["🔥 Trending", "💎 Exclusive"],
-            ["🔗 Invite & Earn", "💰 My Balance"],
-            ["💸 Withdraw"]
-        ]
-
-        reply = ReplyKeyboardMarkup(menu, resize_keyboard=True)
-
-        await query.message.reply_text(
-            "✅ Verified Successfully",
-            reply_markup=reply
-        )
-
-    else:
-        await query.answer("❌ Join all channels first!", show_alert=True)
-
-
-app = ApplicationBuilder().token(config.TOKEN).build()
-
-app.add_handler(CommandHandler("start", start))
-app.add_handler(CallbackQueryHandler(verify, pattern="verify"))
-
-app.add_handler(CommandHandler("stats", admin_commands.stats))
-app.add_handler(CommandHandler("broadcast", admin_commands.broadcast))
-
-app.add_handler(CommandHandler("balance", user_commands.balance))
-app.add_handler(CommandHandler("invite", user_commands.invite))
-app.add_handler(CommandHandler("withdraw", user_commands.withdraw))
-
-app.run_polling(drop_pending_updates=True)            ["🔥 Trending", "💎 Exclusive"],
-            ["🔗 Invite & Earn", "💰 My Balance"],
-            ["💸 Withdraw"]
-        ]
-
-        reply = ReplyKeyboardMarkup(menu, resize_keyboard=True)
-
-        await query.message.reply_text(
-            "✅ Verified Successfully",
-            reply_markup=reply
-        )
-
-    else:
-        await query.answer("❌ Join all channels first!", show_alert=True)
+app.run_polling(drop_pending_updates=True)        await query.answer("❌ Join all channels first!", show_alert=True)
 
 
 app = ApplicationBuilder().token(config.TOKEN).build()
