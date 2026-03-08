@@ -130,4 +130,4 @@ app.add_handler(CommandHandler("invite", user_commands.invite))
 app.add_handler(CommandHandler("withdraw", user_commands.withdraw))
 
 
-app.run_polling()
+app.run_polling(drop_pending_updates=True)
